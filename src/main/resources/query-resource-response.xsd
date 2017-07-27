@@ -1,0 +1,87 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.gmcc.net/ngcrm/"
+           targetNamespace="http://www.gmcc.net/ngcrm/" elementFormDefault="qualified">
+
+    <xs:element name="ResultMessage">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="MessageHeader" type="tns:MessageHeader"/>
+                <xs:element name="MessageBody" type="tns:MessageBody" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="MessageBody">
+        <xs:sequence>
+            <xs:element name="AccInfo" type="tns:AccInfo"/>
+            <xs:element name="BalanceInfo" type="tns:BalanceInfo"/>
+            <xs:element name="ScoreInfo" type="tns:ScoreInfo"/>
+            <xs:element name="FlowInfo" type="tns:FlowInfo"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="MessageHeader">
+        <xs:sequence>
+            <xs:element name="TradeType" type="xs:string"/>
+            <xs:element name="ServerNum" type="xs:string"/>
+            <xs:element name="ResultCode" type="xs:int"/>
+            <xs:element name="ResultDesc" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="AccInfo">
+        <xs:sequence>
+            <xs:element name="MobileNo" type="xs:string"/>
+            <xs:element name="AcctID" type="xs:string"/>
+            <xs:element name="SubsID" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Balance">
+        <xs:sequence>
+            <xs:element name="AcctItemID" type="xs:string"/>
+            <xs:element name="AcctID" type="xs:string"/>
+            <xs:element name="EffTime" type="xs:string"/>
+            <xs:element name="ExpTime" type="xs:string"/>
+            <xs:element name="Amt" type="xs:int"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="BalanceInfo">
+        <xs:sequence>
+            <xs:element name="Balance" type="tns:Balance" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Score">
+        <xs:complexContent>
+            <xs:extension base="tns:Balance">
+                <xs:sequence>
+                    <xs:element name="TransRate" type="xs:double"/>
+                    <xs:element name="TransAmt" type="xs:double"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="Flow">
+        <xs:complexContent>
+            <xs:extension base="tns:Balance">
+                <xs:sequence>
+                    <xs:element name="TransRate" type="xs:double"/>
+                    <xs:element name="TransAmt" type="xs:double"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="ScoreInfo">
+        <xs:sequence>
+            <xs:element name="Score" type="tns:Score" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="FlowInfo">
+        <xs:sequence>
+            <xs:element name="Flow" type="tns:Flow" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>
